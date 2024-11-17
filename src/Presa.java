@@ -12,10 +12,26 @@ public class Presa {
         this.y = y;
         this.lampadina = lampadina;
     }
+    public Presa(String nome, String stanza, float x, float y, Lampadina lampadina) {
+        this.nome = nome;
+        this.stanza = stanza;
+        this.zona = null;
+        this.x = x;
+        this.y = y;
+        this.lampadina = lampadina;
+    }
     public Presa(String nome, String stanza, String zona, float x, float y) {
         this.nome = nome;
         this.stanza = stanza;
         this.zona = zona;
+        this.x = x;
+        this.y = y;
+        lampadina = null;
+    }
+    public Presa(String nome, String stanza, float x, float y) {
+        this.nome = nome;
+        this.stanza = stanza;
+        this.zona = null;
         this.x = x;
         this.y = y;
         lampadina = null;
