@@ -1,3 +1,7 @@
+import entity.Lampadina;
+import entity.Sistema;
+import entity.Sistemi;
+
 import java.util.Scanner;
 
 public class Main {
@@ -64,23 +68,23 @@ public class Main {
                         System.out.println("La potenza totale del sistema risulta: " + s.cercaSistema(sceltaSistema()).getPotenzaSistema());
                 case 7 -> {
                     s.cercaSistema(sceltaSistema()).accendiLampadina(sceltaLampadina());
-                    System.out.println("Lampadina accesa");
+                    System.out.println("entity.Lampadina accesa");
                 }
                 case 8 -> {
                     s.cercaSistema(sceltaSistema()).spegniLampadina(sceltaLampadina());
-                    System.out.println("Lampadina spenta");
+                    System.out.println("entity.Lampadina spenta");
                 }
                 case 9 -> {
                     s.cercaSistema(sceltaSistema()).accendiSistema();
-                    System.out.println("Sistema acceso");
+                    System.out.println("entity.Sistema acceso");
                 }
                 case 10 -> {
                     s.cercaSistema(sceltaSistema()).spegniSistema();
-                    System.out.println("Sistema spento");
+                    System.out.println("entity.Sistema spento");
                 }
                 case 11 -> {
                     s.cercaSistema(sceltaSistema()).eliminaLampadina(sceltaLampadina());
-                    System.out.println("Lampadina eliminata");
+                    System.out.println("entity.Lampadina eliminata");
                 }
                 case 12 ->
                     isOk = false;

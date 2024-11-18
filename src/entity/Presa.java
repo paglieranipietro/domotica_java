@@ -1,9 +1,11 @@
+package entity;
+
 public class Presa {
-    String nome;
-    String stanza;
-    String zona;
-    float x, y;
-    Lampadina lampadina;
+    private String nome;
+    private String stanza;
+    private String zona;
+    private float x, y;
+    private Lampadina lampadina;
     public Presa(String nome, String stanza, String zona, float x, float y, Lampadina lampadina) {
         this.nome = nome;
         this.stanza = stanza;
@@ -39,7 +41,7 @@ public class Presa {
     public void aggiungiLampadina (Lampadina lampadina) {
         this.lampadina = lampadina;
     }
-    public void eliminaLampadina (Lampadina lampadina) {
+    public void eliminaLampadina () {
         this.lampadina = null;
     }
 
@@ -65,6 +67,17 @@ public class Presa {
 
     public Lampadina getLampadina() {
         return lampadina;
+    }
+
+    public boolean hasLampadina(){
+        return lampadina != null;
+    }
+
+    public float getPotenza(){
+        if(!hasLampadina() || !getLampadina().isOn()){
+            return 0;
+        }
+        return lampadina.getPotenza() * lampadina.getQI() / 100;
     }
 
     public void setNome(String nome) {

@@ -1,3 +1,5 @@
+package entity;
+
 public class Lampadina {
     private String nome, colore = "bianco";
     private final float potenza;
@@ -40,8 +42,10 @@ public class Lampadina {
     }
 
     public void setQI(int QI) {
-        if (QI <= 100 && QI % 100 == 0){
-            this.QI = QI;
+        if(QI < 0){
+            this.QI = 0;
+        } else {
+            this.QI = Math.min(QI, 100);
         }
     }
 
