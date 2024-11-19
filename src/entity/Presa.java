@@ -69,12 +69,12 @@ public class Presa {
         return lampadina;
     }
 
-    public boolean hasLampadina(){
+    public boolean haLampadina(){
         return lampadina != null;
     }
 
     public float getPotenza(){
-        if(!hasLampadina() || !getLampadina().isOn()){
+        if(!haLampadina() || !getLampadina().isOn()){
             return 0;
         }
         return lampadina.getPotenza() * lampadina.getQI() / 100;

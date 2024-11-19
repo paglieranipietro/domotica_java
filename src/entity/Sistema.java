@@ -22,7 +22,7 @@ public class Sistema {
 
     public int cercaIndicePresa(String nome) {
         for (int i = 0; i < prese.size(); i++) {
-            if(!prese.get(i).hasLampadina())
+            if(!prese.get(i).haLampadina())
                 continue;
             if(nome.equals(prese.get(i).getNome())){
                 return i;
@@ -33,7 +33,7 @@ public class Sistema {
 
     public int cercaIndiceLampadina (String nome){
         for (int i = 0; i < prese.size(); i++) {
-            if(!prese.get(i).hasLampadina())
+            if(!prese.get(i).haLampadina())
                 continue;
             if(nome.equals(prese.get(i).getLampadina().getNome())){
                 return i;
@@ -87,19 +87,27 @@ public class Sistema {
 
     public void accendiSistema () {
         for (Presa presa : prese) {
-            if (presa.hasLampadina())
+            if (presa.haLampadina())
                 presa.getLampadina().setOn();
         }
     }
 
     public void spegniSistema () {
         for (Presa presa : prese) {
-            if (presa.hasLampadina())
+            if (presa.haLampadina())
                 presa.getLampadina().setOff();
         }
     }
 
+    /**
+     * Eliminare la lampadina dato il nome
+     * @param nome nome della lampadina
+     */
     public void eliminaLampadina (String nome) {
         prese.get(cercaIndiceLampadina(nome)).eliminaLampadina();
+    }
+
+    public ArrayList<Presa> getPrese() {
+        return prese;
     }
 }

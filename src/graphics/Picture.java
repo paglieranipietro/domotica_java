@@ -53,7 +53,6 @@ public class Picture implements Shape
     {
         load(source);
     }
-
     /**
      * Loads a new image from a given file or URL.
      * 
@@ -310,4 +309,6 @@ public class Picture implements Shape
             }
         }
     }
+
+
 }
