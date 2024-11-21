@@ -100,11 +100,10 @@ public class Presa {
     }
 
     public void draw(){
-        int delta = 99999;
         // spostare le immagini in una zona dove non si vede;
-        immaginePresa.translate(delta,delta);
-        immagineLampada.translate(delta,delta);
-        getImmagine().translate(-getImmagine().getX()+ x, -getImmagine().getY() + y);
+        immaginePresa.setPosition(-1000,-1000);
+        immagineLampada.setPosition(-1000,-1000);
+        getImmagine().setPosition(x,y);
         getImmagine().draw();
     }
 }
