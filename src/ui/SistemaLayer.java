@@ -30,20 +30,10 @@ public class SistemaLayer {
         disegnaPrese();
     }
 
-    private static void disegnaPrese(){
+    public static void disegnaPrese(){
         ArrayList<Presa> prese = sistema.getPrese();
         for(Presa p : prese){
-            if(p.haLampadina()){
-                Picture lampadina = new Picture(lampadinaImg);
-                lampadina.translate(-lampadina.getX(),-lampadina.getY());
-                lampadina.translate(p.getX(),p.getY());
-                lampadina.draw();
-            } else {
-                Picture presa = new Picture(presaImg);
-                presa.translate(-presa.getX(),-presa.getY());
-                presa.translate(p.getX(),p.getY());
-                presa.draw();
-            }
+            p.draw();
         }
     }
 }

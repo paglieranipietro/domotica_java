@@ -20,7 +20,7 @@ public class Canvas
 
     private ArrayList<Shape> shapes = new ArrayList<Shape>();
     private BufferedImage background;
-    private JFrame frame;
+    public JFrame frame;
     private CanvasComponent component;
 
     private static final int MIN_SIZE = 100;
