@@ -2,42 +2,30 @@ package entity;
 
 import graphics.Picture;
 
-public class Presa {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Presa implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 574957592385323L;
     private String nome;
     private String stanza;
     private String zona;
     private float x, y;
     private Lampadina lampadina;
-    public final Picture immagineLampada =  new Picture("src/images/lampadina.jpg");
-    public final Picture immaginePresa = new Picture("src/images/presa.jpg");
-    public Presa(String nome, String stanza, String zona, float x, float y, Lampadina lampadina) {
-        this.nome = nome;
-        this.stanza = stanza;
-        this.zona = zona;
-        this.x = x;
-        this.y = y;
-        this.lampadina = lampadina;
-    }
-    public Presa(String nome, String stanza, float x, float y, Lampadina lampadina) {
+    public final Picture immagineLampada =  new Picture("src/images/lampadina.png");
+    public final Picture immaginePresa = new Picture("src/images/presa.png");
+    public Presa(String nome, String stanza, float x, float y) {
         this.nome = nome;
         this.stanza = stanza;
         this.zona = null;
         this.x = x;
         this.y = y;
-        this.lampadina = lampadina;
-    }
-    public Presa(String nome, String stanza, String zona, float x, float y) {
-        this.nome = nome;
-        this.stanza = stanza;
-        this.zona = zona;
-        this.x = x;
-        this.y = y;
         lampadina = null;
     }
 
-    public Presa(String nome, String stanza, float x, float y) {
+    public Presa(String nome, float x, float y) {
         this.nome = nome;
-        this.stanza = stanza;
         this.zona = null;
         this.x = x;
         this.y = y;
@@ -52,22 +40,6 @@ public class Presa {
 
     public String getNome() {
         return nome;
-    }
-
-    public String getStanza() {
-        return stanza;
-    }
-
-    public String getZona() {
-        return zona;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
     }
 
     public Lampadina getLampadina() {

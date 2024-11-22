@@ -146,4 +146,10 @@ public class Rectangle implements Shape
             g2.draw(rect);
         }
     }
+
+    public void setPosition(double x, double y){
+        this.x = x;
+        this.y = y;
+        Canvas.getInstance().repaint();
+    }
 }

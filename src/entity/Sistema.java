@@ -1,30 +1,32 @@
 package entity;
 
+import controller.OperazioniUtente;
+import graphics.Canvas;
 import ui.SistemaLayer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Sistema extends MouseAdapter {
-    private String nome;
-    private ArrayList<Presa> prese;
+public class Sistema implements Serializable {
+    //private String nome;
+    @Serial
+    private static final long serialVersionUID = 857428027573214L;
+    private final ArrayList<Presa> prese;
     private static final int DELTA_LUMINOSITA = 10;
-
-    public Sistema(String nome) {
-        this.nome = nome;
+    
+    public Sistema() {
         prese = new ArrayList<>();
     }
 
     public void aggiungiPresa(Presa presa) {
         prese.add(presa);
     }
-
-    public String getNome() {
-        return this.nome;
-    }
-
+    
     public Presa cercaPresa(String nome) {
         int indice = cercaIndicePresa(nome);
         if (indice == -1) {
@@ -42,45 +44,27 @@ public class Sistema extends MouseAdapter {
         return -1;
     }
 
-    public int cercaIndiceLampadina(String nome) {
-        for (int i = 0; i < prese.size(); i++) {
-            if (prese.get(i).haLampadina() && nome.equals(prese.get(i).getLampadina().getNome())) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public Lampadina cercaLampadina(String nome) {
-        int indice = cercaIndiceLampadina(nome);
-        if (indice == -1) {
-            throw new IllegalArgumentException("Lampadina " + nome + " not found");
-        }
-        return prese.get(indice).getLampadina();
-    }
-
     public void aggiungiLampadinaAPresa(String nomePresa, Lampadina lampadina) {
         Presa p = cercaPresa(nomePresa);
         p.aggiungiLampadina(lampadina);
     }
 
-    public void aumentaLuminosita(String nome) {
-        Lampadina l = cercaLampadina(nome);
+    public void aumentaLuminosita(String nomePresa) {
+        Lampadina l = cercaPresa(nomePresa).getLampadina();
         l.setQI(l.getQI() + DELTA_LUMINOSITA);
     }
 
-    public void diminuisciLuminosita(String nome) {
-        Lampadina l = cercaLampadina(nome);
+    public void diminuisciLuminosita(String nomePresa) {
+        Lampadina l = cercaPresa(nomePresa).getLampadina();
         l.setQI(l.getQI() - DELTA_LUMINOSITA);
     }
 
-    public void modificaLuminosita(String nome, int QI) {
-        Lampadina l = cercaLampadina(nome);
-        l.setQI(QI);
+    public void modificaLuminosita(String nomePresa, int QI) {
+        cercaPresa(nomePresa).getLampadina().setQI(QI);
     }
 
-    public void modificaColore(String nome, String colore) {
-        cercaLampadina(nome).setColore(colore);
+    public void modificaColore(String nomePresa, String colore) {
+        cercaPresa(nomePresa).getLampadina().setColore(colore);
     }
 
     public float getPotenzaSistema() {
@@ -92,11 +76,11 @@ public class Sistema extends MouseAdapter {
     }
 
     public void accendiLampadina(String nome) {
-        cercaLampadina(nome).setOn();
+        cercaPresa(nome).getLampadina().setOn();
     }
 
     public void spegniLampadina(String nome) {
-        cercaLampadina(nome).setOff();
+        cercaPresa(nome).getLampadina().setOff();
     }
 
     public void accendiSistema() {
@@ -113,51 +97,31 @@ public class Sistema extends MouseAdapter {
         }
     }
 
-    public void eliminaLampadina(String nome) {
-        int indice = cercaIndiceLampadina(nome);
+    public void eliminaLampadina(String nomePresa) throws IllegalArgumentException {
+        int indice = cercaIndicePresa(nomePresa);
         if (indice == -1) {
-            throw new IllegalArgumentException("Lampadina " + nome + " not found");
+            throw new IllegalArgumentException("Presa " + nomePresa + " not found");
         }
         prese.get(indice).eliminaLampadina();
     }
 
+    public void eliminaPresa(String nomePresa) {
+        int indice = cercaIndicePresa(nomePresa);
+        Canvas.delete(prese.get(indice).immaginePresa);
+        Canvas.delete(prese.get(indice).immagineLampada);
+        prese.remove(indice);
+    }
+    
     public ArrayList<Presa> getPrese() {
         return prese;
     }
-
-    Scanner scanner = new Scanner(System.in);
-    public Lampadina letturaInfoLampadina() {
-        System.out.println("Inserisci il nome della lampadina: ");
-        String nome = scanner.nextLine();
-        System.out.println("Inserisci la potenza della lampadina: ");
-        float potenza = scanner.nextInt();
-        return new Lampadina(nome, potenza);
-    }
-
-    private boolean haCliccatoSu(Presa p, MouseEvent e) {
-        float lx = p.getX();
-        float ly = p.getY();
-        float rx = p.getX() + p.getImmagine().getWidth();
-        float ry = p.getY() + p.getImmagine().getHeight();
-        return e.getX() >= lx && e.getX() <= rx && e.getY() >= ly && e.getY() <= ry;
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
-        for (Presa p : prese) {
-            if (haCliccatoSu(p, e)) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    if (p.haLampadina()) {
-                        p.togliLampadina();
-                    } else {
-                        Lampadina l = letturaInfoLampadina();
-                        p.aggiungiLampadina(l);
-                    }
-                }
-                break;
+    
+    public String presaCliccata(MouseEvent e){
+        for (Presa presa : prese) {
+            if(OperazioniUtente.haCliccato(presa.getImmagine(),e)){
+                return presa.getNome();
             }
         }
-        SistemaLayer.disegnaPrese();
+        return null;
     }
 }

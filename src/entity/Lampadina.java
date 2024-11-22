@@ -1,6 +1,12 @@
 package entity;
 
-public class Lampadina {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Lampadina implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 21471294827194L;
+
     private String nome, colore = "bianco";
     private final float potenza;
     private int QI = 60;
@@ -36,7 +42,7 @@ public class Lampadina {
     }
 
     public void setColore(String colore) {
-        if (colore == "bianco" || colore == "giallo" || colore == "blu"){
+        if ("bianco".equals(colore) || "giallo".equals(colore)  || "blu".equals(colore)) {
             this.colore = colore;
         }
     }

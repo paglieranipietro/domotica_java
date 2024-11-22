@@ -1,9 +1,7 @@
 package graphics;//HIDE
 //OUT canvas.png
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
 import java.io.File;
@@ -192,5 +190,9 @@ public class Canvas
             System.err.println("Was unable to save the image to " + fileName);
         }
     	g.dispose();    	
+    }
+
+    public static void delete(Picture p){
+        canvas.shapes.removeIf(s -> s.equals(p));
     }
 }

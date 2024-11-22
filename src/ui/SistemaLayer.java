@@ -9,14 +9,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class SistemaLayer {
-    private static String lampadinaImg,piantinaImg,presaImg;
+    private static String piantinaImg;
     private static final Dimension dimensioneSchermo = Toolkit.getDefaultToolkit().getScreenSize();
     private static Sistema sistema;
     private static void caricaIndirizzoImmagini(){
         //System.out.println(new File("../images/lampadina.jpg").getAbsolutePath());
-        lampadinaImg = "src/images/lampadina.jpg";
         piantinaImg = "src/images/piantina_appartamento.jpg";
-        presaImg = "src/images/presa.jpg";
     }
 
     public static void inizializza(Sistema s){
