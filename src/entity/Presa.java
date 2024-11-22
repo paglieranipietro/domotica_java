@@ -71,7 +71,7 @@ public class Presa {
     }
 
     public Lampadina getLampadina() {
-        return lampadina;
+        return this.lampadina;
     }
 
     public boolean haLampadina(){
