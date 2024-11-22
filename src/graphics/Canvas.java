@@ -125,15 +125,18 @@ public class Canvas
     {
         if (frame == null) return;
         Dimension dim = component.getPreferredSize();
-        if (dim.getWidth() > component.getWidth()
-                || dim.getHeight() > component.getHeight())
-        {
-            frame.pack();
-        }
-        else
-        {
+
+        //Commentato per non far riadattare la finestra ad ogni modifica
+
+//        if (dim.getWidth() > component.getWidth()
+//                || dim.getHeight() > component.getHeight())
+//        {
+//            frame.pack();
+//        }
+//        else
+        //{
             frame.repaint();
-        }
+        //}
     }
 
     /**
