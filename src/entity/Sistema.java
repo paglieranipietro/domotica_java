@@ -1,9 +1,13 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import ui.SistemaLayer;
 
-public class Sistema {
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Sistema extends MouseAdapter {
     private String nome;
     private ArrayList<Presa> prese;
     private static final int DELTA_LUMINOSITA = 10;
@@ -119,5 +123,41 @@ public class Sistema {
 
     public ArrayList<Presa> getPrese() {
         return prese;
+    }
+
+    Scanner scanner = new Scanner(System.in);
+    public Lampadina letturaInfoLampadina() {
+        System.out.println("Inserisci il nome della lampadina: ");
+        String nome = scanner.nextLine();
+        System.out.println("Inserisci la potenza della lampadina: ");
+        float potenza = scanner.nextInt();
+        return new Lampadina(nome, potenza);
+    }
+
+    private boolean haCliccatoSu(Presa p, MouseEvent e) {
+        float lx = p.getX();
+        float ly = p.getY();
+        float rx = p.getX() + p.getImmagine().getWidth();
+        float ry = p.getY() + p.getImmagine().getHeight();
+        return e.getX() >= lx && e.getX() <= rx && e.getY() >= ly && e.getY() <= ry;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        for (Presa p : prese) {
+            if (haCliccatoSu(p, e)) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (p.haLampadina()) {
+                        p.togliLampadina();
+                    } else {
+                        Lampadina l = letturaInfoLampadina();
+                        p.aggiungiLampadina(l);
+                    }
+                }
+                break;
+            }
+        }
+        SistemaLayer.disegnaPrese();
     }
 }
