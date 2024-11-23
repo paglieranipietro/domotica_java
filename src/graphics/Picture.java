@@ -17,10 +17,8 @@ import javax.swing.filechooser.FileFilter;
 /**
  * A picture from an image file.
  */
-public class Picture implements Shape, Serializable
+public class Picture implements Shape
 {
-    @Serial
-    private static final long serialVersionUID = 123957125129L;
     private BufferedImage image;
     private JLabel label = new JLabel();    
     private String source;

@@ -13,8 +13,14 @@ public class Presa implements Serializable {
     private String zona;
     private float x, y;
     private Lampadina lampadina;
-    public final Picture immagineLampada =  new Picture("src/images/lampadina.png");
-    public final Picture immaginePresa = new Picture("src/images/presa.png");
+    public transient Picture immagineLampada;
+    public transient Picture immaginePresa;
+
+    public void inizializzaImmagini(){
+        this.immaginePresa = new Picture("src/images/presa.png");
+        this.immagineLampada = new Picture("src/images/lampadina.png");
+    }
+
     public Presa(String nome, String stanza, float x, float y) {
         this.nome = nome;
         this.stanza = stanza;
@@ -22,6 +28,7 @@ public class Presa implements Serializable {
         this.x = x;
         this.y = y;
         lampadina = null;
+        inizializzaImmagini();
     }
 
     public Presa(String nome, float x, float y) {
@@ -30,6 +37,7 @@ public class Presa implements Serializable {
         this.x = x;
         this.y = y;
         lampadina = null;
+        inizializzaImmagini();
     }
     public void aggiungiLampadina (Lampadina lampadina) {
         this.lampadina = lampadina;

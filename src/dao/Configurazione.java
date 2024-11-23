@@ -1,5 +1,6 @@
 package dao;
 
+import entity.Presa;
 import entity.Sistema;
 
 import java.io.*;
@@ -13,6 +14,9 @@ public class Configurazione {
         FileInputStream fin = new FileInputStream("sistema.dat");
         ObjectInputStream in = new ObjectInputStream(fin);
         Sistema s = (Sistema) in.readObject();
+        for(Presa p : s.getPrese()){
+            p.inizializzaImmagini();
+        }
         in.close();
         fin.close();
         return s;

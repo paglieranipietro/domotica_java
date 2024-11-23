@@ -60,7 +60,7 @@ public class MouseUtenteListener extends MouseAdapter{
                     try {
                         Configurazione.salvaSistema(sistema);
                     } catch (IOException ex) {
-                        System.out.println("Salvamento fallito"); // TODO salvataggio del sistema
+                        System.out.println("Salvamento fallito");
                     }
                     synchronized (lock){
                         lock.notify();
