@@ -7,7 +7,7 @@ import java.io.*;
 
 public class Configurazione {
     public static Sistema leggiSistema() throws IOException, ClassNotFoundException {
-        File f = new File("sistema.dat");
+        File f = new File("config/sistema.dat");
         if(f.length() == 0){
             return new Sistema();
         }

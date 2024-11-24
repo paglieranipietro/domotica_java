@@ -13,9 +13,10 @@ public class Ellipse implements Shape
     
     /**
      * Constructs an ellipse.
-     * @param x the leftmost x-coordinate
-     * @param y the topmost y-coordinate
-     * @param width the width of the bounding box
+     *
+     * @param x      the leftmost x-coordinate
+     * @param y      the topmost y-coordinate
+     * @param width  the width of the bounding box
      * @param height the height of the bounding box
      */
     public Ellipse(double x, double y, double width, double height)
