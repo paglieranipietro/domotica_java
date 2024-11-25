@@ -1,9 +1,6 @@
 package entity;
 
-import graphics.Canvas;
-import graphics.Color;
-import graphics.Ellipse;
-import graphics.Picture;
+import graphics.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,9 +11,7 @@ import static graphics.Color.WHITE;
 public class Presa implements Serializable {
     @Serial
     private static final long serialVersionUID = 574957592385323L;
-    private String nome;
-    private String stanza;
-    private String zona;
+    public final String nome;
     private float x, y;
     private Lampadina lampadina;
     public transient Picture immagineLampada;
@@ -32,7 +27,6 @@ public class Presa implements Serializable {
 
     public Presa(String nome, float x, float y) {
         this.nome = nome;
-        this.zona = null;
         this.x = x;
         this.y = y;
         lampadina = null;
@@ -114,4 +108,5 @@ public class Presa implements Serializable {
         }
         getImmagine().draw();
     }
+
 }
