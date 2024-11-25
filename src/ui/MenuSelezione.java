@@ -14,7 +14,7 @@ public class MenuSelezione {
     private static final int X_FUORI = -100;
     private static final int Y_FUORI = -100;
     private static final int X = 10;
-    private static final int Y = 10;
+    private static final int Y = 50;
     private static final int DISTANZA = 60;
     private static final int Distanza_Y = 5;
 
