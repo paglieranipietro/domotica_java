@@ -3,20 +3,32 @@ package ui;
 import entity.Presa;
 import entity.Sistema;
 import graphics.*;
-import graphics.Canvas;
-
-import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * La classe `SistemaLayer` gestisce la rappresentazione grafica del sistema.
+ */
 public class SistemaLayer {
     private static String piantinaImg;
+
     public static Picture salvataggio = new Picture("src/images/salvataggio.png");
+
     public static Picture onOff = new Picture("src/images/onOff.png");
+
     private static Sistema sistema;
+
+    /**
+     * Carica il percorso dell'immagine della piantina.
+     */
     private static void caricaIndirizzoImmagini(){
         piantinaImg = "src/images/piantina_appartamento.jpg";
     }
 
+    /**
+     * Inizializza il livello di sistema con il sistema dato.
+     *
+     * @param s il sistema da inizializzare
+     */
     public static void inizializza(Sistema s){
         sistema = s;
         caricaIndirizzoImmagini();
@@ -32,11 +44,13 @@ public class SistemaLayer {
         disegnaPrese();
     }
 
+    /**
+     * Disegna tutte le prese nel sistema.
+     */
     public static void disegnaPrese(){
         ArrayList<Presa> prese = sistema.getPrese();
         for(Presa p : prese){
             p.draw();
         }
     }
-
 }
