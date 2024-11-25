@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * La classe `SistemaLayer` gestisce la rappresentazione grafica del sistema.
  */
 public class SistemaLayer {
-    private static String piantinaImg;
+    private static String piantinaImg = "src/images/piantina_appartamento.jpg";
 
     public static Picture salvataggio = new Picture("src/images/salvataggio.png");
 
@@ -18,29 +18,20 @@ public class SistemaLayer {
     private static Sistema sistema;
 
     /**
-     * Carica il percorso dell'immagine della piantina.
-     */
-    private static void caricaIndirizzoImmagini(){
-        piantinaImg = "src/images/piantina_appartamento.jpg";
-    }
-
-    /**
      * Inizializza il livello di sistema con il sistema dato.
      *
      * @param s il sistema da inizializzare
      */
     public static void inizializza(Sistema s){
         sistema = s;
-        caricaIndirizzoImmagini();
-        // piantina dell'appartamento
         Picture piantina = new Picture(piantinaImg);
-        piantina.translate(300,-100);
-        piantina.draw();
-        salvataggio.translate(1400,700);
-        salvataggio.draw();
-        onOff.translate(1437,660);
-        onOff.draw();
 
+        Canvas.getInstance().frame.setSize(850,800);
+        Canvas.getInstance().frame.setResizable(false);
+
+        piantina.setPosition(-100,-100);
+
+        piantina.draw();
         disegnaPrese();
     }
 

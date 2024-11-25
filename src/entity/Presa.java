@@ -23,9 +23,11 @@ public class Presa implements Serializable {
 
     public transient Picture immaginePresa;
 
-    Ellipse colorCircle;
+    private transient Ellipse colorCircle;
 
-    String colore = "bianco";
+    private String colore = "bianco";
+
+    private String stanza;
 
     /**
      * Inizializza le immagini per la presa e la lampadina.
@@ -94,6 +96,10 @@ public class Presa implements Serializable {
         return this.lampadina;
     }
 
+    public String getStanza() {
+        return stanza;
+    }
+
     /**
      * Verifica se la presa ha una lampadina.
      *
@@ -127,6 +133,10 @@ public class Presa implements Serializable {
         return immaginePresa;
     }
 
+    public void setStanza(String stanza) {
+        this.stanza = stanza;
+    }
+
     /**
      * Alterna lo stato della lampadina (acceso/spento).
      */
@@ -145,7 +155,7 @@ public class Presa implements Serializable {
      *
      * @param colore il colore attuale della presa
      */
-    public void changeColor (String colore){
+    public void changeColor (){
         switch (colore) {
             case "rosso" -> this.colore = "verde";
             case "verde" -> this.colore = "blu";
@@ -159,7 +169,7 @@ public class Presa implements Serializable {
      *
      * @param colore il colore da disegnare
      */
-    public void drawColor (String colore){
+    public void drawColor (){
         switch (colore) {
             case "rosso" -> this.colorCircle.setColor(new Color(25 * this.lampadina.getQI() / 10, 0, 0));
             case "verde" -> this.colorCircle.setColor(new Color(0, 25 * this.lampadina.getQI() / 10, 0));
@@ -181,11 +191,22 @@ public class Presa implements Serializable {
         immagineLampada.setPosition(-1000,-1000);
         colorCircle.translate(-1000 - colorCircle.getX(), -1000 - colorCircle.getY());
         getImmagine().setPosition(x - (double)(getImmagine().getWidth() / 2),y - (double)(getImmagine().getHeight() / 2));
-        if(getImmagine() == immagineLampada){
+        if(haLampadina()){
             colorCircle.translate(1000 + getImmagine().getX() + 17, 1000 + getImmagine().getY() + 17);
-            drawColor(colore);
+            drawColor();
         }
         getImmagine().draw();
     }
 
+    @Override
+    public String toString() {
+        return "Presa{" +
+                "colore='" + colore + '\'' +
+                ", stanza='" + stanza + '\'' +
+                ", y=" + y +
+                ", x=" + x +
+                ", nome='" + nome + '\'' +
+                ", lampadina=" + lampadina +
+                '}';
+    }
 }

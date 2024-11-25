@@ -3,12 +3,19 @@ import controller.OperazioniUtente;
 import dao.Configurazione;
 import entity.Sistema;
 import graphics.Canvas;
-import ui.MenuSelezione;
 import ui.SistemaLayer;
-
+import ui.PulsantiLayer;
 import java.io.IOException;
 
 public class Main {
+
+    private static void inizializzazione(Sistema s) throws IOException {
+        SistemaLayer.inizializza(s);
+        s.leggiStanze();
+        OperazioniUtente.inizializza(s);
+        PulsantiLayer.inizializza();
+        Canvas.getInstance().frame.addMouseListener(new MouseUtenteListener(s));
+    }
 
     public static void main(String[] args) {
         Sistema s;
@@ -17,9 +24,11 @@ public class Main {
         } catch (IOException | ClassNotFoundException e) {
             s = new Sistema();
         }
-        SistemaLayer.inizializza(s);
-        MenuSelezione.inizializza();
-        OperazioniUtente.inizializza(s);
-        Canvas.getInstance().frame.addMouseListener(new MouseUtenteListener(s));
+        try {
+            inizializzazione(s);
+        } catch (IOException e) {
+            System.out.println("Why???");
+        }
+
     }
 }

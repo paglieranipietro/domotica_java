@@ -1,9 +1,12 @@
 package entity;
 
 import controller.OperazioniUtente;
+import dao.Configurazione;
 import graphics.Canvas;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,19 +16,31 @@ import java.util.ArrayList;
  * Implementa l'interfaccia `Serializable` per permettere la serializzazione delle sue istanze.
  */
 public class Sistema implements Serializable {
-    //private String nome;  //verrà aggiunto quando gestiremo più sistemi
+    //private String nome; //verrà aggiunto quando gestiremo più sistemi
     @Serial
     private static final long serialVersionUID = 857428027573214L;
 
     private final ArrayList<Presa> prese;
 
     private static final int DELTA_LUMINOSITA = 10;
-
+    private transient ArrayList<Stanza> stanze;
     /**
      * Costruisce un nuovo `Sistema`.
      */
     public Sistema() {
         prese = new ArrayList<>();
+        leggiStanze();
+    }
+
+    public void leggiStanze(){
+        ArrayList<Stanza> stanzeTemp;
+        try {
+            stanzeTemp = Configurazione.leggiStanze();
+        } catch (IOException e) {
+            stanzeTemp = new ArrayList<>();
+            System.out.println("Errore lettura stanze");
+        }
+        stanze = stanzeTemp;
     }
 
     /**
@@ -47,7 +62,7 @@ public class Sistema implements Serializable {
     public Presa cercaPresa(String nome) {
         int indice = cercaIndicePresa(nome);
         if (indice == -1) {
-            throw new IllegalArgumentException("Presa " + nome + " non trovata");
+            return null;
         }
         return prese.get(indice);
     }
@@ -152,10 +167,48 @@ public class Sistema implements Serializable {
      * @param e l'evento del mouse
      * @return il nome della presa cliccata, o null se nessuna presa è stata cliccata
      */
-    public String presaCliccata(MouseEvent e){
+    public String presaCliccata(Point e){
         for (Presa presa : prese) {
             if(OperazioniUtente.haCliccato(presa.getImmagine(),e)){
                 return presa.getNome();
+            }
+        }
+        return null;
+    }
+
+    public String stanzaCliccata(Point p){
+        for (Stanza stanza : stanze) {
+            if (OperazioniUtente.haCliccato(stanza.getPosizione(),p)){
+                return stanza.nome;
+            }
+        }
+        return null;
+    }
+
+    public void accendiSistema(){
+        boolean tuttoAcceso = true;
+        for(Presa p : getPrese()){
+            if(p.haLampadina() && !p.getLampadina().isOn()){
+                tuttoAcceso = false;
+            }
+        }
+        for (Presa p : getPrese()){
+            if(p.haLampadina()){
+                if(!tuttoAcceso){
+                    p.getLampadina().setOn();
+                } else {
+                    p.getLampadina().setOff();
+                }
+            }
+        }
+    }
+
+    public Lampadina cercaLampadina(String nome) {
+        for(Presa presa : prese){
+            if(presa.haLampadina()){
+                if(presa.getLampadina().nome.equals(nome)){
+                    return presa.getLampadina();
+                }
             }
         }
         return null;
