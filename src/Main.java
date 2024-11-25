@@ -21,6 +21,5 @@ public class Main {
         MenuSelezione.inizializza();
         OperazioniUtente.inizializza(s);
         Canvas.getInstance().frame.addMouseListener(new MouseUtenteListener(s));
-        //MenuSelezione.disegna(new Presa("123","123",0,0));
     }
 }

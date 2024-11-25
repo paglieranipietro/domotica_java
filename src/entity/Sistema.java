@@ -2,15 +2,11 @@ package entity;
 
 import controller.OperazioniUtente;
 import graphics.Canvas;
-import ui.SistemaLayer;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Sistema implements Serializable {
     //private String nome;
@@ -44,15 +40,6 @@ public class Sistema implements Serializable {
         return -1;
     }
 
-    public boolean isSistemaOn(){
-        for (Presa presa : prese) {
-            if(presa.haLampadina() && presa.getLampadina().isOn()){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void aggiungiLampadinaAPresa(String nomePresa, Lampadina lampadina) {
         Presa p = cercaPresa(nomePresa);
         p.aggiungiLampadina(lampadina);
@@ -68,38 +55,12 @@ public class Sistema implements Serializable {
         l.setQI(l.getQI() - DELTA_LUMINOSITA);
     }
 
-    public void modificaLuminosita(String nomePresa, int QI) {
-        cercaPresa(nomePresa).getLampadina().setQI(QI);
-    }
-
-    public void modificaColore(String nomePresa, String colore) {
-        cercaPresa(nomePresa).getLampadina().setColore(colore);
-    }
-
     public float getPotenzaSistema() {
         float totale = 0;
         for (Presa presa : prese) {
             totale += presa.getPotenza();
         }
         return totale;
-    }
-
-    public void accendiSistema() {
-        for (Presa presa : prese) {
-            if (presa.haLampadina()) {
-                presa.getLampadina().setOn();
-                presa.drawColor(presa.getLampadina().getColore());
-            }
-        }
-    }
-
-    public void spegniSistema() {
-        for (Presa presa : prese) {
-            if (presa.haLampadina()) {
-                presa.getLampadina().setOff();
-                presa.drawColor(presa.getLampadina().getColore());
-            }
-        }
     }
 
     public void eliminaLampadina(String nomePresa) throws IllegalArgumentException {

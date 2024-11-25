@@ -28,7 +28,6 @@ public class SistemaLayer {
         salvataggio.draw();
         onOff.translate(1437,660);
         onOff.draw();
-        //onOff.grow(50,50);
 
         disegnaPrese();
     }

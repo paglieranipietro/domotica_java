@@ -18,14 +18,6 @@ public class Lampadina implements Serializable {
         this.potenza = potenza;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public String getColore() {
-        return colore;
-    }
-
     public float getPotenza() {
         return potenza;
     }
@@ -36,12 +28,6 @@ public class Lampadina implements Serializable {
 
     public boolean isOn() {
         return isOn;
-    }
-
-    public void setColore(String colore) {
-        if ("bianco".equals(colore) || "giallo".equals(colore)  || "blu".equals(colore)) {
-            this.colore = colore;
-        }
     }
 
     public void setQI(int QI) {

@@ -5,8 +5,6 @@ import graphics.*;
 import java.io.Serial;
 import java.io.Serializable;
 
-import static graphics.Color.BLUE;
-import static graphics.Color.WHITE;
 
 public class Presa implements Serializable {
     @Serial
@@ -77,10 +75,6 @@ public class Presa implements Serializable {
                 lampadina.setOn();
             }
         }
-    }
-
-    public boolean isLampadinaAccesa(){
-        return this.lampadina.isOn();
     }
 
     public void changeColor (String colore){
