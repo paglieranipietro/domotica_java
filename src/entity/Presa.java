@@ -22,7 +22,7 @@ public class Presa implements Serializable {
     public void inizializzaImmagini(){
         this.immaginePresa = new Picture("src/images/presa.png");
         this.immagineLampada = new Picture("src/images/lampadina.png");
-        this.colorCircle = new Ellipse(-1000, -1000, 47, 47);
+        this.colorCircle = new Ellipse(-1000, -1000, 45, 42);
     }
 
     public Presa(String nome, float x, float y) {
@@ -69,6 +69,19 @@ public class Presa implements Serializable {
         return immaginePresa;
     }
 
+    public void onOffLampadina(){
+        if(haLampadina()){
+            if (lampadina.isOn()){
+                lampadina.setOff();
+            } else {
+                lampadina.setOn();
+            }
+        }
+    }
+
+    public boolean isLampadinaAccesa(){
+        return this.lampadina.isOn();
+    }
 
     public void changeColor (String colore){
         if (colore.equals("rosso")){
@@ -92,8 +105,10 @@ public class Presa implements Serializable {
         } else if(colore.equals("bianco")){
             this.colorCircle.setColor(new Color(25 * this.lampadina.getQI() / 10, 25 * this.lampadina.getQI() / 10, 25 * this.lampadina.getQI() / 10));
         }
-        colorCircle.draw();
-        colorCircle.fill();
+        if(this.lampadina.isOn()) {
+            colorCircle.draw();
+            colorCircle.fill();
+        }else colorCircle.translate(-1000 - colorCircle.getX(), -1000 - colorCircle.getY());
     }
 
     public void draw(){
@@ -103,7 +118,7 @@ public class Presa implements Serializable {
         colorCircle.translate(-1000 - colorCircle.getX(), -1000 - colorCircle.getY());
         getImmagine().setPosition(x - (getImmagine().getWidth() / 2),y - (getImmagine().getHeight() / 2));
         if(getImmagine() == immagineLampada){
-            colorCircle.translate(1000 + getImmagine().getX() + 15, 1000 + getImmagine().getY() + 15);
+            colorCircle.translate(1000 + getImmagine().getX() + 17, 1000 + getImmagine().getY() + 17);
             drawColor(colore);
         }
         getImmagine().draw();
