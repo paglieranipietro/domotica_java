@@ -7,7 +7,8 @@ public class Lampadina implements Serializable {
     @Serial
     private static final long serialVersionUID = 21471294827194L;
 
-    private String nome, colore = "bianco";
+    public final String nome;
+    private String colore = "bianco";
     private final float potenza;
     private int QI = 60;
     private boolean isOn = false;
@@ -35,10 +36,6 @@ public class Lampadina implements Serializable {
 
     public boolean isOn() {
         return isOn;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public void setColore(String colore) {
