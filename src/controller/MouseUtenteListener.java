@@ -57,11 +57,13 @@ public class MouseUtenteListener extends MouseAdapter{
         if(cliccoMenu(e)){
             return;
         }
-        if(e.getButton() == MouseEvent.BUTTON2){
+        if(e.getButton() == MouseEvent.BUTTON1 && OperazioniUtente.haCliccato(SistemaLayer.salvataggio, e)) {
             try {
                 Configurazione.salvaSistema(sistema);
+                System.out.println("Salvataggio effettuato");
             } catch (IOException ex) {
-                System.out.println("Salvamento fallito");
+                System.err.println("Salvamento fallito: " + ex.getMessage());
+                //ex.printStackTrace();
             }
             return;
         }
