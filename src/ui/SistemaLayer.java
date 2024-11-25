@@ -10,10 +10,9 @@ import java.util.ArrayList;
 
 public class SistemaLayer {
     private static String piantinaImg;
-    private static final Dimension dimensioneSchermo = Toolkit.getDefaultToolkit().getScreenSize();
+    public static Picture salvataggio = new Picture("src/images/salvataggio.png");
     private static Sistema sistema;
     private static void caricaIndirizzoImmagini(){
-        //System.out.println(new File("../images/lampadina.jpg").getAbsolutePath());
         piantinaImg = "src/images/piantina_appartamento.jpg";
     }
 
@@ -24,6 +23,8 @@ public class SistemaLayer {
         Picture piantina = new Picture(piantinaImg);
         piantina.translate(300,-100);
         piantina.draw();
+        salvataggio.translate(1400,700);
+        salvataggio.draw();
 
         disegnaPrese();
     }
