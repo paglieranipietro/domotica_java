@@ -22,57 +22,30 @@ public class OperazioniUtente {
 
     }
     protected static Lampadina letturaInfoLampadina() {
-        AtomicReference<String> nome = new AtomicReference<>();
-        AtomicReference<Float> potenza = new AtomicReference<>((float) 0);
-        synchronized (MouseUtenteListener.lock){
-            new Thread(() -> {
-                boolean flag = true;
-                while (flag){
-                    try {
-                        Scanner USER_IN = new Scanner(System.in);
-                        System.out.println("Inserisci il nome della lampadina: ");
-                        nome.set(USER_IN.nextLine());
-                        System.out.println("Inserisci la potenza della lampadina: ");
-                        potenza.set(USER_IN.nextFloat());
-                        flag = false;
-                    } catch (InputMismatchException e){
-                        System.out.println("Formato input errato");
-                    }
-                }
-
-                synchronized (MouseUtenteListener.lock) {
-                    MouseUtenteListener.lock.notify();
-                }
-
-            }).start();
+        String nome = null;
+        float potenza = 0.0f;
+        boolean flag = true;
+        Scanner USER_IN = new Scanner(System.in);
+        while (flag){
             try {
-                MouseUtenteListener.lock.wait();
-            } catch (InterruptedException e) {
-                //e.printStackTrace();
+                System.out.println("Inserisci il nome della lampadina: ");
+                nome = USER_IN.nextLine();
+                System.out.println("Inserisci la potenza della lampadina: ");
+                potenza = USER_IN.nextFloat();
+                flag = false;
+            } catch (InputMismatchException e){
+                System.out.println("Formato input errato");
             }
         }
-        return new Lampadina(nome.get(), potenza.get());
+        return new Lampadina(nome, potenza);
     }
 
     protected static Presa letturaInfoPresa(MouseEvent e) {
-        AtomicReference<String> nome = new AtomicReference<>();
-
-        synchronized (MouseUtenteListener.lock){
-            new Thread(() -> {
-                Scanner USER_IN = new Scanner(System.in);
-                System.out.println("Inserisci il nome della presa: ");
-                nome.set(USER_IN.nextLine());
-                synchronized (MouseUtenteListener.lock) {
-                    MouseUtenteListener.lock.notify();
-                }
-            }).start();
-            try {
-                MouseUtenteListener.lock.wait();
-            } catch (InterruptedException err) {
-                //err.printStackTrace();
-            }
-        }
-        return new Presa(nome.get(),e.getX(),e.getY());
+        String nome;
+        Scanner USER_IN = new Scanner(System.in);
+        System.out.println("Inserisci il nome della presa: ");
+        nome = USER_IN.nextLine();
+        return new Presa(nome,e.getX(),e.getY());
     }
 
     protected static long operazioneCodice(int codice,MouseEvent e){

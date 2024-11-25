@@ -55,24 +55,11 @@ public class MouseUtenteListener extends MouseAdapter{
             return;
         }
         if(e.getButton() == MouseEvent.BUTTON2){
-            synchronized (lock){
-                new Thread(() -> {
-                    try {
-                        Configurazione.salvaSistema(sistema);
-                    } catch (IOException ex) {
-                        System.out.println("Salvamento fallito");
-                    }
-                    synchronized (lock){
-                        lock.notify();
-                    }
-                }).start();
-                try {
-                    MouseUtenteListener.lock.wait();
-                } catch (InterruptedException err) {
-                    //err.printStackTrace();
-                }
+            try {
+                Configurazione.salvaSistema(sistema);
+            } catch (IOException ex) {
+                System.out.println("Salvamento fallito");
             }
-
             return;
         }
         OperazioniUtente.presaSelezionata = null;

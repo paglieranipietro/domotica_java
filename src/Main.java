@@ -1,13 +1,11 @@
 import controller.MouseUtenteListener;
 import controller.OperazioniUtente;
 import dao.Configurazione;
-import entity.Presa;
 import entity.Sistema;
 import graphics.Canvas;
 import ui.MenuSelezione;
 import ui.SistemaLayer;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class Main {
