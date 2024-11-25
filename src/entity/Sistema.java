@@ -44,6 +44,15 @@ public class Sistema implements Serializable {
         return -1;
     }
 
+    public boolean isSistemaOn(){
+        for (Presa presa : prese) {
+            if(presa.haLampadina() && presa.getLampadina().isOn()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void aggiungiLampadinaAPresa(String nomePresa, Lampadina lampadina) {
         Presa p = cercaPresa(nomePresa);
         p.aggiungiLampadina(lampadina);
@@ -75,25 +84,21 @@ public class Sistema implements Serializable {
         return totale;
     }
 
-    public void accendiLampadina(String nome) {
-        cercaPresa(nome).getLampadina().setOn();
-    }
-
-    public void spegniLampadina(String nome) {
-        cercaPresa(nome).getLampadina().setOff();
-    }
-
     public void accendiSistema() {
         for (Presa presa : prese) {
-            if (presa.haLampadina())
+            if (presa.haLampadina()) {
                 presa.getLampadina().setOn();
+                presa.drawColor(presa.getLampadina().getColore());
+            }
         }
     }
 
     public void spegniSistema() {
         for (Presa presa : prese) {
-            if (presa.haLampadina())
+            if (presa.haLampadina()) {
                 presa.getLampadina().setOff();
+                presa.drawColor(presa.getLampadina().getColore());
+            }
         }
     }
 

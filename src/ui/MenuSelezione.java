@@ -10,6 +10,7 @@ public class MenuSelezione {
     public static final Picture MENO = new Picture("src/images/MENO.png");
     public static final Picture CESTINO = new Picture("src/images/CESTINO.png");
     public static final Picture COLORI = new Picture("src/images/colori.png");
+    public static final Picture ONOFF = new Picture("src/images/onOff.png");
     private static final Rectangle CONTENITORE = new Rectangle(-100,-100,300,55);
     private static final int X_FUORI = -100;
     private static final int Y_FUORI = -100;
@@ -30,6 +31,7 @@ public class MenuSelezione {
         MENO.setPosition(X+DISTANZA,Y + Distanza_Y);
         COLORI.setPosition(X + 2 * DISTANZA,Y + Distanza_Y);
         CESTINO.setPosition(X + 3 * DISTANZA,Y + Distanza_Y);
+        ONOFF.setPosition(X + 4 * DISTANZA,Y + Distanza_Y);
     }
     public static void inizializza(){
         togli();
@@ -38,6 +40,7 @@ public class MenuSelezione {
         MENO.draw();
         COLORI.draw();
         CESTINO.draw();
+        ONOFF.draw();
     }
     public static void disegna(Presa p){
 
@@ -54,5 +57,6 @@ public class MenuSelezione {
         MENO.setPosition(X_FUORI,Y_FUORI);
         COLORI.setPosition(X_FUORI,Y_FUORI);
         CESTINO.setPosition(X_FUORI,Y_FUORI);
+        ONOFF.setPosition(X_FUORI,Y_FUORI);
     }
 }

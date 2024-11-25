@@ -80,6 +80,20 @@ public class OperazioniUtente {
             case 4:
                 sistema.cercaPresa(presaSelezionata).changeColor(sistema.cercaPresa(presaSelezionata).getColore());
                 sistema.cercaPresa(presaSelezionata).drawColor(sistema.cercaPresa(presaSelezionata).getColore());
+                break;
+            case 5:
+                sistema.cercaPresa(presaSelezionata).onOffLampadina();
+                break;
+        }
+        SistemaLayer.disegnaPrese();
+        return System.currentTimeMillis();
+    }
+
+    protected static long onOffSistema(){
+        for(Presa p : sistema.getPrese()){
+            if(p.haLampadina()){
+                p.onOffLampadina();
+            }
         }
         SistemaLayer.disegnaPrese();
         return System.currentTimeMillis();

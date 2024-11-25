@@ -33,7 +33,10 @@ public class MouseUtenteListener extends MouseAdapter{
         } else if(OperazioniUtente.haCliccato(MenuSelezione.COLORI,e)) {
             if(e.getButton() == MouseEvent.BUTTON1)
                 prevTime = OperazioniUtente.operazioneCodice(4,e);
-        }else if(MouseEvent.BUTTON3 == e.getButton() && sistema.presaCliccata(e) == null){
+        } else if (OperazioniUtente.haCliccato(MenuSelezione.ONOFF,e)) {
+            if(e.getButton() == MouseEvent.BUTTON1)
+                prevTime = OperazioniUtente.operazioneCodice(5,e);
+        } else if(MouseEvent.BUTTON3 == e.getButton() && sistema.presaCliccata(e) == null){
             prevTime = OperazioniUtente.operazioneCodice(3,e);
         } else {
             return false;
@@ -63,9 +66,12 @@ public class MouseUtenteListener extends MouseAdapter{
                 System.out.println("Salvataggio effettuato");
             } catch (IOException ex) {
                 System.err.println("Salvamento fallito: " + ex.getMessage());
-                //ex.printStackTrace();
+                //ex.printStackTrace();   //uncomment se voglio vedere lo stack degli errori
             }
             return;
+        }
+        if(e.getButton() == MouseEvent.BUTTON1 && OperazioniUtente.haCliccato(SistemaLayer.onOff, e)){
+            OperazioniUtente.onOffSistema();
         }
         OperazioniUtente.presaSelezionata = null;
         MenuSelezione.togli();
