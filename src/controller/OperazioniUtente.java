@@ -76,6 +76,10 @@ public class OperazioniUtente {
                 Presa p = letturaInfoPresa(e);
                 sistema.aggiungiPresa(p);
                 p.draw();
+                break;
+            case 4:
+                sistema.cercaPresa(presaSelezionata).changeColor(sistema.cercaPresa(presaSelezionata).getColore());
+                sistema.cercaPresa(presaSelezionata).drawColor(sistema.cercaPresa(presaSelezionata).getColore());
         }
         SistemaLayer.disegnaPrese();
         return System.currentTimeMillis();

@@ -30,7 +30,10 @@ public class MouseUtenteListener extends MouseAdapter{
         } else if(OperazioniUtente.haCliccato(MenuSelezione.MENO,e)){
             if(e.getButton() == MouseEvent.BUTTON1)
                 prevTime = OperazioniUtente.operazioneCodice(2,e);
-        } else if(MouseEvent.BUTTON3 == e.getButton() && sistema.presaCliccata(e) == null){
+        } else if(OperazioniUtente.haCliccato(MenuSelezione.COLORI,e)) {
+            if(e.getButton() == MouseEvent.BUTTON1)
+                prevTime = OperazioniUtente.operazioneCodice(4,e);
+        }else if(MouseEvent.BUTTON3 == e.getButton() && sistema.presaCliccata(e) == null){
             prevTime = OperazioniUtente.operazioneCodice(3,e);
         } else {
             return false;

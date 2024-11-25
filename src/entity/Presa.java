@@ -1,12 +1,14 @@
 package entity;
 
 import graphics.Canvas;
+import graphics.Color;
 import graphics.Ellipse;
 import graphics.Picture;
 
 import java.io.Serial;
 import java.io.Serializable;
 
+import static graphics.Color.BLUE;
 import static graphics.Color.WHITE;
 
 public class Presa implements Serializable {
@@ -19,26 +21,13 @@ public class Presa implements Serializable {
     private Lampadina lampadina;
     public transient Picture immagineLampada;
     public transient Picture immaginePresa;
-    public transient Picture cerchioRosso;
-    public transient Picture cerchioGiallo;
-    public transient Picture cerchioBlu;
+    Ellipse colorCircle;
+    String colore = "bianco";
 
     public void inizializzaImmagini(){
         this.immaginePresa = new Picture("src/images/presa.png");
         this.immagineLampada = new Picture("src/images/lampadina.png");
-        this.cerchioRosso = new Picture("src/images/rosso.png");
-        this.cerchioGiallo = new Picture("src/images/giallo.png");
-        this.cerchioBlu = new Picture("src/images/blu.png");
-    }
-
-    public Presa(String nome, String stanza, float x, float y) {
-        this.nome = nome;
-        this.stanza = stanza;
-        this.zona = null;
-        this.x = x;
-        this.y = y;
-        lampadina = null;
-        inizializzaImmagini();
+        this.colorCircle = new Ellipse(-1000, -1000, 47, 47);
     }
 
     public Presa(String nome, float x, float y) {
@@ -58,6 +47,10 @@ public class Presa implements Serializable {
 
     public String getNome() {
         return nome;
+    }
+
+    public String getColore(){
+        return colore;
     }
 
     public Lampadina getLampadina() {
@@ -82,22 +75,42 @@ public class Presa implements Serializable {
         return immaginePresa;
     }
 
-    public void togliLampadina(){
-        this.lampadina = null;
+
+    public void changeColor (String colore){
+        if (colore.equals("rosso")){
+            this.colore = "verde";
+        }else if (colore.equals("verde")) {
+            this.colore = "blu";
+        }else if (colore.equals("blu")) {
+            this.colore = "bianco";
+        }else if(colore.equals("bianco")){
+            this.colore = "rosso";
+        }
     }
-    public void setNome(String nome) {
-        this.nome = nome;
+
+    public void drawColor (String colore){
+        if(colore.equals("rosso")){
+            this.colorCircle.setColor(new Color(25 * this.lampadina.getQI() / 10, 0, 0));
+        } else if(colore.equals("verde")){
+            this.colorCircle.setColor(new Color(0, 25 * this.lampadina.getQI() / 10, 0));
+        } else if(colore.equals("blu")){
+            this.colorCircle.setColor(new Color(0, 0, 25 * this.lampadina.getQI() / 10));
+        } else if(colore.equals("bianco")){
+            this.colorCircle.setColor(new Color(25 * this.lampadina.getQI() / 10, 25 * this.lampadina.getQI() / 10, 25 * this.lampadina.getQI() / 10));
+        }
+        colorCircle.draw();
+        colorCircle.fill();
     }
 
     public void draw(){
         // spostare le immagini in una zona dove non si vede;
         immaginePresa.setPosition(-1000,-1000);
         immagineLampada.setPosition(-1000,-1000);
-        getImmagine().setPosition(x,y);
+        colorCircle.translate(-1000 - colorCircle.getX(), -1000 - colorCircle.getY());
+        getImmagine().setPosition(x - (getImmagine().getWidth() / 2),y - (getImmagine().getHeight() / 2));
         if(getImmagine() == immagineLampada){
-            cerchioGiallo.setPosition(-1000, -1000);
-            cerchioGiallo.setPosition(x,y);
-            cerchioGiallo.draw();
+            colorCircle.translate(1000 + getImmagine().getX() + 15, 1000 + getImmagine().getY() + 15);
+            drawColor(colore);
         }
         getImmagine().draw();
     }
