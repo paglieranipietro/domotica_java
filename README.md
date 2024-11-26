@@ -1,5 +1,5 @@
-#domotica_java
-###Autori: Pietro Paglierani e Cristiano Wang
+# domotica_java
+### Autori: Pietro Paglierani e Cristiano Wang
 Progetto informatico sviluppato in ambiente scolastico su indicazione del professore.
 Realizzato in java con l'utilizzo della libreria "Simple Java Graphics".
 Il progetto consiste nella gestione di un sistema domotico che può:
