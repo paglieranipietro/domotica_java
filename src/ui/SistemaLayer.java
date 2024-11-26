@@ -28,7 +28,8 @@ public class SistemaLayer {
 
         Canvas.getInstance().frame.setSize(850,800);
         Canvas.getInstance().frame.setResizable(false);
-
+        Canvas.getInstance().frame.setLocation(300,0);
+        Canvas.getInstance().frame.requestFocus();
         piantina.setPosition(-100,-100);
 
         piantina.draw();

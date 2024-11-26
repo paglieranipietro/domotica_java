@@ -75,7 +75,7 @@ public class Sistema implements Serializable {
      */
     public int cercaIndicePresa(String nome) {
         for (int i = 0; i < prese.size(); i++) {
-            if (nome.equals(prese.get(i).getNome())) {
+            if (prese.get(i).getNome().equals(nome)) {
                 return i;
             }
         }
@@ -176,6 +176,11 @@ public class Sistema implements Serializable {
         return null;
     }
 
+    /**
+     * Ottenere il nome della stanza che contiene il punto p
+     * @param p punto
+     * @return 'nome'
+     */
     public String stanzaCliccata(Point p){
         for (Stanza stanza : stanze) {
             if (OperazioniUtente.haCliccato(stanza.getPosizione(),p)){
@@ -185,6 +190,9 @@ public class Sistema implements Serializable {
         return null;
     }
 
+    /**
+     * Accendere/spegnere il sistema
+     */
     public void accendiSistema(){
         boolean tuttoAcceso = true;
         for(Presa p : getPrese()){
@@ -203,6 +211,11 @@ public class Sistema implements Serializable {
         }
     }
 
+    /**
+     * Cerca lampadina dato il nome
+     * @param nome nome della lampadina da cercare
+     * @return 'lampadina'
+     */
     public Lampadina cercaLampadina(String nome) {
         for(Presa presa : prese){
             if(presa.haLampadina()){

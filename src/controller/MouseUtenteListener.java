@@ -52,8 +52,8 @@ public class MouseUtenteListener extends MouseAdapter {
             String nomePresa = sistema.presaCliccata(posizione);
             if(nomePresa != null){
                 MenuSelezione.togli();
-                MenuInformazioni.togli();
-                OperazioniUtente.togliScrittaPotenza();
+                OperazioniUtente.infoPresaVisibile = false;
+                OperazioniUtente.aggiornamentoInfoPresa();
                 OperazioniUtente.presaSelezionata = nomePresa;
                 MenuSelezione.disegna(sistema.cercaPresa(OperazioniUtente.presaSelezionata));
                 return;
@@ -70,12 +70,10 @@ public class MouseUtenteListener extends MouseAdapter {
             if(!OperazioniUtente.haCliccato(MenuInformazioni.testo,posizione)){
                 MenuInformazioni.togli();
             }
-            OperazioniUtente.togliScrittaPotenza();
         } else if(OperazioniUtente.modalitaUtente == 1){
             OperazioniUtente.modalitaUtente = 0;
             OperazioniUtente.presaSelezionata = null;
             OperazioniUtente.disegnaScritta();
-            OperazioniUtente.togliScrittaPotenza();
         }
     }
 }

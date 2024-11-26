@@ -4,6 +4,7 @@ import dao.Configurazione;
 import entity.Lampadina;
 import entity.Presa;
 import entity.Sistema;
+import graphics.Canvas;
 import graphics.Shape;
 import graphics.Text;
 import ui.MenuInformazioni;
@@ -23,10 +24,24 @@ import java.util.Scanner;
 public class OperazioniUtente {
 
     protected static String presaSelezionata;
+
     private static Sistema sistema;
+
+    /**
+     * Numero che indica la modalita' dell'utente
+     * 0 per modalita' selezione
+     * 1 per modalita' aggiungi presa
+     */
     protected static int modalitaUtente;
+
+    /**
+     * Indicazione per utente in modalita' 1
+     */
     private static final Text info = new Text(-100,-100,"Clicca dove vuoi aggiungere una presa!");
+    protected static boolean infoPresaVisibile = false;
+    private static boolean scrittaPotenzaVisibile = false;
     private static Text potenzaSis = new Text(-100,-100,"");
+
     /**
      * Inizializza il sistema con l'oggetto `Sistema` specificato.
      *
@@ -47,19 +62,21 @@ public class OperazioniUtente {
         float potenza = 0.0f;
         boolean flag = true;
         Scanner USER_IN = new Scanner(System.in);
+        System.out.println("Inserisci il nome della lampadina: ");
+        nome = USER_IN.nextLine();
+        while(sistema.cercaLampadina(nome) != null){
+            System.out.println("Questo nome esiste gia'");
+            System.out.println("Inserisci il nome della lampadina: ");
+            nome = USER_IN.nextLine();
+        }
         while (flag) {
             try {
-                System.out.println("Inserisci il nome della lampadina: ");
-                nome = USER_IN.nextLine();
-                if(sistema.cercaLampadina(nome) != null){
-                    System.out.println("Questo nome esiste gia'");
-                    return null;
-                }
                 System.out.println("Inserisci la potenza della lampadina: ");
                 potenza = USER_IN.nextFloat();
                 flag = false;
             } catch (InputMismatchException e) {
-                System.out.println("Formato input errato");
+                String inserimento = USER_IN.nextLine();
+                System.out.println(inserimento + " non e' un numero");
             }
         }
         return new Lampadina(nome, potenza);
@@ -76,9 +93,10 @@ public class OperazioniUtente {
         Scanner USER_IN = new Scanner(System.in);
         System.out.println("Inserisci il nome della presa: ");
         nome = USER_IN.nextLine();
-        if(sistema.cercaPresa(nome) != null){
+        while(sistema.cercaPresa(nome) != null){
             System.out.println("Questo nome esiste gia'");
-            return null;
+            System.out.println("Inserisci il nome della presa: ");
+            nome = USER_IN.nextLine();
         }
         return new Presa(nome, (float)e.getX(), (float)e.getY());
     }
@@ -98,90 +116,101 @@ public class OperazioniUtente {
      * @return il tempo corrente del sistema in millisecondi
      */
     protected static long operazioneCodice(int codice, Point point) {
-        boolean fPotenza = false;
+        Presa pSelezionata = sistema.cercaPresa(presaSelezionata);
         switch (codice) {
-            case 0:
-                if (sistema.cercaPresa(presaSelezionata).haLampadina())
+            case 0: // eliminare una presa o una lampadina
+                if (pSelezionata.haLampadina()){
                     sistema.eliminaLampadina(presaSelezionata);
-                else {
+                }else {
                     sistema.eliminaPresa(presaSelezionata);
                 }
                 presaSelezionata = null;
-                MenuInformazioni.togli();
-                MenuSelezione.togli();
                 break;
-            case 1:
-                if (sistema.cercaPresa(presaSelezionata).haLampadina()) {
+            case 1: // aumentare la luminosita' o aggiungere una lampadina
+                if (pSelezionata.haLampadina()) {
                     sistema.aumentaLuminosita(presaSelezionata);
-                    MenuInformazioni.togli();
+                    MenuInformazioni.mostraInformazioni(pSelezionata);
                 } else {
+                    Canvas.getInstance().frame.setVisible(false);
                     sistema.aggiungiLampadinaAPresa(presaSelezionata, OperazioniUtente.letturaInfoLampadina());
                     presaSelezionata = null;
-                    MenuSelezione.togli();
-                    MenuInformazioni.togli();
+                    Canvas.getInstance().frame.setVisible(true);
+                    Canvas.getInstance().frame.toFront();
+                    Canvas.getInstance().frame.requestFocus();
                 }
                 break;
-            case 2:
-                if (sistema.cercaPresa(presaSelezionata).haLampadina()) {
+            case 2: // diminuire la luminosita'
+                if (pSelezionata.haLampadina()) {
                     sistema.diminuisciLuminosita(presaSelezionata);
-                    MenuInformazioni.togli();
+                    MenuInformazioni.mostraInformazioni(pSelezionata);
                 }
                 break;
-            case 3:
+            case 3: // creare una nuova presa
+                Canvas.getInstance().frame.setVisible(false);
                 String stanza = ottieniStanza(point);
                 if(null != stanza){
                     Presa p = letturaInfoPresa(point);
-                    if(p != null){
-                        p.setStanza(stanza);
-                        sistema.aggiungiPresa(p);
-                    }
+                    p.setStanza(stanza);
+                    sistema.aggiungiPresa(p);
                 } else {
                     System.out.println("Posizione invalida");
                 }
+                Canvas.getInstance().frame.setVisible(true);
+                Canvas.getInstance().frame.toFront();
+                Canvas.getInstance().frame.requestFocus();
                 presaSelezionata = null;
                 modalitaUtente = 0;
                 break;
-            case 4:
+            case 4: // cambiare il colore ad una lampadina
                 sistema.cercaPresa(presaSelezionata).changeColor();
                 sistema.cercaPresa(presaSelezionata).drawColor();
                 break;
-            case 5:
+            case 5: // accendere o spegnere il sistema
                 sistema.accendiSistema();
+                presaSelezionata = null;
                 break;
-            case 6:
+            case 6: // entrata in modalita' 1
                 modalitaUtente = 1;
                 presaSelezionata = null;
                 break;
-            case 7 :
+            case 7 : // salvataggio del sistema
                 try {
                     Configurazione.salvaSistema(sistema);
                     System.out.println("Sistema aggiunto!");
                 } catch (IOException e) {
                     System.out.println("Salvataggio fallito");
                 }
+                presaSelezionata = null;
                 break;
-            case 8:
-                sistema.cercaPresa(presaSelezionata).onOffLampadina();
+            case 8: // accendi/spegni lampadina
+                pSelezionata.onOffLampadina();
                 break;
-            case 9:
-                MenuInformazioni.mostraInformazioni(sistema.cercaPresa(presaSelezionata));
+            case 9: // mostrare le informazioni di una presa/lampadina
+                infoPresaVisibile = !infoPresaVisibile;
                 break;
-            case 10:
-                togliScrittaPotenza();
-                potenzaSis = new Text(450,680,"Potenza totale: " + sistema.getPotenzaSistema() + "W");
-                potenzaSis.draw();
-                fPotenza = true;
-                MenuInformazioni.togli();
-                MenuSelezione.togli();
+            case 10: // mostrare la potenza totale del sistema
+                scrittaPotenzaVisibile = !scrittaPotenzaVisibile;
+                presaSelezionata = null;
         }
-        if(!fPotenza){
-            togliScrittaPotenza();
+        togliScrittaPotenza();
+        if(scrittaPotenzaVisibile){
+            potenzaSis = new Text(450,680,"Potenza totale: " + sistema.getPotenzaSistema() + "W");
+            potenzaSis.draw();
         }
         disegnaScritta();
+        // togliere il menu di selezione e informazioni
+        if(presaSelezionata == null){
+            infoPresaVisibile = false;
+            MenuSelezione.togli();
+        }
+        aggiornamentoInfoPresa();
         SistemaLayer.disegnaPrese();
         return System.currentTimeMillis();
     }
 
+    /**
+     * Si occupa di mostrare o meno l'informazione in modalita' utente 1
+     */
     public static void disegnaScritta(){
         if(modalitaUtente == 1){
             info.setPosition(600,680);
@@ -190,6 +219,20 @@ public class OperazioniUtente {
         }
     }
 
+    /**
+     * Scrive le informazioni presa se devono essere scritte
+     */
+    public static void aggiornamentoInfoPresa(){
+        if(infoPresaVisibile){
+            MenuInformazioni.mostraInformazioni(sistema.cercaPresa(presaSelezionata));
+        } else {
+            MenuInformazioni.togli();
+        }
+    }
+
+    /**
+     * Nasconde la scritta potenza
+     */
     public static void togliScrittaPotenza(){
         potenzaSis.setPosition(-100,-100);
     }

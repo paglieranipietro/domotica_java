@@ -50,6 +50,11 @@ public class Configurazione {
         fout.close();
     }
 
+    /**
+     * Leggere le stanze dal file "src/config/stanze.config"
+     * @return 'stanze' lista
+     * @throws IOException se ci sono errori generici di IO
+     */
     public static ArrayList<Stanza> leggiStanze() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("src/config/stanze.config"));
         String nomeStanza;
@@ -64,6 +69,11 @@ public class Configurazione {
         return stanze;
     }
 
+    /**
+     * Legge i pulsanti dal file "src/config/pulsanti.config"
+     * @return 'pulsanti' lista
+     * @throws IOException
+     */
     public static ArrayList<Pulsante> leggiPulsanti() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("src/config/pulsanti.config"));
         String riga;

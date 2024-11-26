@@ -152,8 +152,6 @@ public class Presa implements Serializable {
 
     /**
      * Cambia il colore della presa in modo ciclico.
-     *
-     * @param colore il colore attuale della presa
      */
     public void changeColor (){
         switch (colore) {
@@ -166,8 +164,6 @@ public class Presa implements Serializable {
 
     /**
      * Disegna il cerchio colorato in base al colore specificato.
-     *
-     * @param colore il colore da disegnare
      */
     public void drawColor (){
         switch (colore) {
